@@ -1,0 +1,647 @@
+<div id="html-footer" class="section">
+	<div class="container">
+<script>function PanelToggleL(a){var b=a.attr('data'),c=a.css('margin-left');a.attr('data',c);a.stop().animate({'margin-left':b},500)}</script>
+<style>
+#left-panel {
+  outline:
+  top:300px;
+  top:300px;
+  padding:0;
+  margin-left:-290px;
+  position:fixed;z-index:1000;
+  left: 0px;
+}
+.content-L {
+  padding:12px;
+  width:236px;
+  height:536px;
+  margin-left:14px;
+  margin-top:18px;
+  position:absolute;
+  color:#fff;
+  background-color:#7289da;
+ 
+}
+</style>
+<div data="0" id="left-panel">
+<div class="content-L">
+<iframe src="https://discordapp.com/widget?id=333891251562872842&theme=dark" width="255" height="500" allowtransparency="true" frameborder="0"></iframe>
+</div>
+<img id="img-left" src="http://forumfiles.ru/files/0019/33/10/90423.png" onclick="PanelToggleL($('#left-panel'))"/>
+</div>
+<!-- Система блогов на форум © Alex_63 / Ч.2 в HTML низ -->
+<script type="text/javascript">
+if(BLOG.view == 0 || $.inArray(GroupID,BLOG.view)!=-1){BLOG.setup();}
+else if(BLOG.view!=0){(function() {
+  if(document.URL.indexOf('blogs.php')!=-1){$('#pun-main .info .container').html(BLOG.txterror);}
+  if($('#pun-index').length){$('.category h2>span:contains("@Blogs")').parents('.category').remove();}
+  if($('#pun-searchtopics').length){$('.tcl a:contains("·")').parents('tr').remove();}
+  if($('#pun-searchposts').length){$('.post h3>span>strong+a[href$="viewforum.php?id='+BLOG.fID+'"]').parents('.post').remove();}
+}())}</script>
+
+<!-- аватары -->
+<style>
+  .pa-avatar.item2, .pa-fld1 {display: none;}
+</style>
+
+<script src="/files/0012/ad/ab/43854.js"></script>
+<script>
+//global var
+var arrStorage, dataSet, currentDate, createDate, arrParam = []; 
+var fld = 1;
+
+var colorClasses = {
+1 : "#c69b5b",
+2 : "#d58cba",
+3 : "#aad372",
+4 : "#fff448",
+5 : "#ffffff",
+6 : "#aa1813",
+7 : "#2359ff",
+8 : "#68cccd",
+9 : "#9382c9",
+10 : "#0dffba",
+11 : "#ff7c0a",
+12 : "#a330c9",
+};
+// end global var
+function readLocalStorage() { //read LocalStorage to global var arrStorage
+  var arrStorage, currentDate, createDate;
+
+  if(window.localStorage) {
+    currentDate = new Date();
+    currentDate = Date.parse(currentDate) / 86400000;
+
+      if (localStorage.getItem('battlenet') !== null) {
+        
+        arrStorage = $.parseJSON(localStorage.getItem('battlenet'));
+        createDate = arrStorage[dataSet];
+        if (currentDate - createDate > 7) {
+          localStorage.removeItem('battlenetAva');
+        } 
+      }
+      if (localStorage.getItem('battlenet') == null) {
+        arrStorage = {};
+        arrStorage['dataSet'] = currentDate;
+      }        
+  }
+  return arrStorage;
+}
+
+function getData(flag, id, realm, nick, aux, place) { //get data from battle.net, if LocalStorage is empty
+  $.jsonp({
+    url: 'https://eu.api.battle.net/wow/character/'+realm+'/'+nick+'?locale=ru_RU&apikey=vm6v9zuw58b9vndh9bfbfrnwmbyf5na6',
+    callbackParameter: 'jsonp',
+    success: function(json) {
+        arrStorage[id] = {'realm': json.realm, 'nick': json.nick, 'aux': aux, 'avatar': json.thumbnail, 'class': json.class};
+        localStorage.setItem('battlenet', JSON.stringify(arrStorage));
+        if (flag == "topic") {
+            setCustomAva(place, realm, nick, aux, json.thumbnail);
+            setColorTopic(place, json.class);
+        }
+        if (flag == "all") {
+            setCustomAva(place, realm, nick, aux, json.thumbnail);
+            $("a[href$='/profile.php?id="+id+"]").css("color", colorClasses[json.class]);
+        }
+        
+    },
+    error: function() {
+        setDefaultAva(place, flag, id);
+    }
+  });
+}
+
+function setDefaultAva(place, flag, id) { //set avatar, if loading failed
+    if (flag == 'profile') {
+        $(place).html('<a title="персонаж неизвестен" class="tip" href="/profile.php?section=fields&id='+id+'"><img src="http://forumfiles.ru/files/0012/ad/ab/72354.jpg" /></a>');
+    }
+    else 
+        $(place).html('<img title="персонаж неизвестен" class="tip" src="http://forumfiles.ru/files/0012/ad/ab/72354.jpg" title="персонаж неизвестен" />');
+}
+
+function setCustomAva(place, param0, param1, param2, avatar) { //set avatar, if loading is successful
+  $(place).append('<a href="http://eu.battle.net/wow/ru/character/'+param0+'/'+param1+'/advanced" title="оружейная" target="_blank" class="tip"> <img alt="'+param2+'" src="http://render-eu.worldofwarcraft.com/character/'+avatar+'"> </a>');
+}
+
+function setColorTopic(place, color) { //set color for links
+    $(place).parent().find("li.pa-author a").css("color", colorClasses[color]);
+}
+
+function lookAvaTopic() { 
+  var flParam, idParam, newAva;
+  $(".post-author").each(function(e) {
+
+    flParam = $(this).find(".pa-fld"+fld);
+    if ($(flParam).length) arrParam = $(flParam).text().split(":")[1].split(",");
+
+    newAva = $('<li class="pa-avatar item3"></li>').insertAfter($(this).find(".pa-title"));
+         if ($(this).find(".pa-respect a[href*='respect.php']").length)
+    idParam = $(this).find(".pa-respect a[href*='respect.php']").attr('href').split('id=')[1];
+
+    else {
+    setDefaultAva(newAva); return;
+    } 
+
+    if(arrParam.length < 2) { setDefaultAva(newAva); return;}
+    if(!arrParam[2]) arrParam[2] = "0"; 
+
+    arrStorage = readLocalStorage();
+
+    if (arrStorage[idParam]) {
+        setCustomAva(newAva, arrParam[0], arrParam[1], arrParam[2], arrStorage[idParam].avatar);
+        setColorTopic(newAva, arrStorage[idParam].class);
+    }
+    else {
+        getData('topic', idParam, arrParam[0], arrParam[1], arrParam[2], newAva);
+    }
+
+  })
+}
+
+function colorLinks() {
+    var idLink, color;
+    $("a[href*='/profile.php?id=']").each(function() {
+        idLink = $(this).attr('href').split("id=")[1];
+        arrStorage = readLocalStorage();
+        if(arrStorage[idLink]) {
+            color = arrStorage[idLink].class;
+            $(this).css("color", colorClasses[color]);
+        }
+        //else getData('all', idLink, realm);
+    });
+}
+
+
+if(document.URL.indexOf("viewtopic.php")!=-1) {
+  lookAvaTopic();
+}
+else {
+  colorLinks();
+}
+if($("#pun-blogs.viewblog").length){
+  lookAvaTopic()
+}
+
+
+//Make mini profile for index (main) page
+if($('#pun-index').length) {
+var loadavatar = 1; 
+
+function MakeProfile() {
+    var paSex='',paAuthor='',paAvatar='',paTitle='',paRespect='',paAge='',paName='',paAwards='';
+    var showFilds = {
+        paAuthor : 1,
+        paTitle : 1,
+        paAvatar : 1,
+        paRespect : 1,
+        paName : 1,
+        paAge : 1,
+        paSex : 1,
+        paAwards : 1
+    }
+    if(showFilds.paAuthor) paAuthor = '<li class="pa-author"><a href="/profile.php?id='+UserID+'">'+UserLogin+'</a></li>';
+    if(showFilds.paTitle) paTitle = '<li class="pa-title">'+UserTitle+'</li>';
+    if(showFilds.paAvatar) paAvatar = '<li class="pa-avatar item3"></li>';
+      
+    if(showFilds.paRespect) {
+        var summRespect = UserRespectPlus - UserRespectMinus;
+        paRespect = '<li class="pa-respect"><a href="/respect.php?id='+UserID+'">Репутация:</a> '+summRespect+'</li>';
+    };
+    if(showFilds.paName) {
+        if (UserName != "") paName = '<li class="pa-name">Имя: '+UserName+'</li>';
+        else paName = '<li class="pa-name">Имя: <a href="/profile.php?section=personal&id='+UserID+'">неизвестно</a></li>';
+    }
+    if (showFilds.paAge) {
+        if (UserBirthDate!='') paAge = '<li class="pa-age">Возраст: '+UserAge+'<span> ['+UserBirthDate+']</span></li>';
+        else paAge = '<li class="pa-age">Возраст: неизвестен <span> [<a href="/profile.php?section=personal&id='+UserID+'">заполнить</a>]</span></li>';
+    }
+    if(showFilds.paSex) {
+        var Usex = {
+            0: 'неизвестно',
+            1: 'мужской',
+            2: 'женский'
+        };
+        paSex = '<li class="pa-sex">Пол: '+Usex[UserSex]+'</li>';
+    }
+    if(showFilds) paAwards = '<li class="pa-awards"><a href="/mod/awards/?uid='+UserID+'">Достижения</a></li>';
+
+    var fullHtml = '<ul>'+paAuthor+paTitle+paAvatar+paRespect+paName+paAge+paSex+paAwards+'</ul>';
+    $("#u-panel").append(fullHtml);
+}
+MakeProfile();
+    //
+    if (loadavatar) {
+        function getAvatarProfile() {
+            var flParam, newAva; 
+
+            $.get("/profile.php?section=fields&id="+UserID+"", function(data){
+
+                newAva = $("#u-panel .pa-avatar.item3");
+
+                var paFld = $(data).find(".input #fld"+fld).val();
+                if (paFld == undefined) {setDefaultAva(newAva, 'profile', UserID); return;}
+                
+                flParam = paFld.split(",");
+                if (flParam.length < 2 ) {setDefaultAva(newAva, 'profile', UserID); return;}
+                
+                if(!flParam[2]) flParam[2] = "0";
+
+                arrStorage = readLocalStorage();
+                console.log(arrStorage);
+                console.log(arrStorage[UserID]);
+                if (arrStorage[UserID]) { 
+                    setCustomAva(newAva, flParam[0], flParam[1], flParam[2], arrStorage[UserID].avatar);
+                    setColorTopic(newAva, arrStorage[UserID].class);
+                }
+                else {
+                    getData('profile', UserID, flParam[0], flParam[1], flParam[2], newAva);
+                }
+            });
+        }
+        getAvatarProfile();
+    }
+
+}
+</script>
+
+<!-- замена слов -->
+<script type="text/javascript">
+function UniverСhange(selektor,changed,substitute){
+$(selektor).each(function(){if ($(this).parent().html()!=null){if($(this).parent().html().indexOf(changed)!=-1){
+$(this).parent().html($(this).parent().html().replace(changed,substitute));};};});}
+
+UniverСhange("#pun-crumbs1 p.container","Сайт гильдии «Синие Ходоки» (World of Warcraft) Галакронд","Сайт гильдии СХ");
+UniverСhange("#pun-crumbs2 p.container","Сайт гильдии «Синие Ходоки» (World of Warcraft) Галакронд","Сайт гильдии СХ");
+
+UniverСhange("li#navuserlist","Участники","Юзерлист"); 
+
+UniverСhange("#profile #profilenav .item4","Аватар","Фото"); 
+UniverСhange("#profile .datafield","аватар","Фото"); 
+UniverСhange("#profile #profile4 fieldset legend span","Настройка отображения аватара","Настройка отображения Фото");
+UniverСhange("#profile #profile4 .datafield","Загрузить аватар","Загрузить фото");
+UniverСhange("#profile #profile4 .datafield","Изменить аватар","Изменить фото");
+UniverСhange("#profile #profile4 .datafield","Удалить аватар","Удалить фото");
+UniverСhange("#profile #profile4 label","Использовать аватар","Использовать фото");
+UniverСhange("#upload_avatar .infofield","Аватар - это маленькое изображение, которое будет отображаться под Вашим именем в сообщениях на форуме. Оно не может быть больше чем","Максимально допустимый размер загружаемого фото:");
+UniverСhange("#viewprofile #profile-left","(Нет аватара)","Нет фото");
+
+UniverСhange("#login .inputfield label","Имя","Логин");
+UniverСhange("#register .inputfield label","Имя","Логин");
+UniverСhange("#register  fieldset legend span","Введите имя пользователя длиной от 2 до 25 символов","Введите никнейм пользователя длиной от 2 до 25 символов");
+UniverСhange("#profile .inputfield label","Имя","Логин");
+UniverСhange("#profile  fieldset legend span","Имя, пароль и e-mail","Логин, пароль и e-mail");
+
+UniverСhange(".forum th.tcl","Тема","Тема <span class=byuser>Автор</span>");
+UniverСhange(".forum th.tcl","Ответов","Ответы");
+UniverСhange(".forum th.tcl","Просмотров","Просмотры");
+UniverСhange(".linkst .pagelink","Страница:","<img src='http://forumfiles.ru/files/000f/29/31/48810.png'>");
+UniverСhange(".linksb .pagelink","Страница:","<img src='http://forumfiles.ru/files/000f/29/31/48810.png'>");
+UniverСhange(".stickytext","Важно:","<img src='http://forumfiles.ru/files/000f/29/31/90265.png' class='tip' title='прикреплено'>");
+UniverСhange(".forum .tclcon","Перемещена:","<img src=http://forumfiles.ru/files/000f/29/31/30357.png class='tip' title='перемещено'>");
+UniverСhange(".closedatafield","Закрыта","<img src=http://forumfiles.ru/files/000f/29/31/14813.png class='tip' title='закрыто'>");
+
+UniverСhange(".linkst .postlink","Тема закрыта","<img src=http://forumfiles.ru/files/000f/29/31/14813.png class='tip' title='закрыто'> Тема закрыта  ");
+UniverСhange(".linksb .postlink","Тема закрыта","");
+
+UniverСhange(".subscribelink a","Подписаться и отслеживать тему","Подписаться");
+UniverСhange(".subscribelink a","Вы подписаны на эту тему: ","");
+
+
+UniverСhange(".forum .tclcon a","/gold/","<img src=/files/0012/ad/ab/53106.png class='tip' title='услуги'>");
+UniverСhange(".forum .tclcon a","/ivent/","<img src=/files/0012/ad/ab/24566.png class='tip' title='событие'>");
+UniverСhange(".forum .tclcon a","/pve/","<img src=/files/0012/ad/ab/81030.png class='tip' title='PvE информация'>");
+UniverСhange(".forum .tclcon a","/pvp/","<img src=/files/0012/ad/ab/80509.png class='tip' title='PvP информация'>");
+UniverСhange(".forum .tclcon a","/tank/","<img src=http://forumfiles.ru/files/0019/33/10/85561.png class='tip' title='Танк'>");
+UniverСhange(".forum .tclcon a","/heal/","<img src=http://forumfiles.ru/files/0019/33/10/20324.png class='tip' title='Исцеление'>");
+UniverСhange(".forum .tclcon a","/dd/","<img src=http://forumfiles.ru/files/0019/33/10/77681.png class='tip' title='ДД'>");
+UniverСhange(".forum .tclcon a","/war/","<img src=http://http://forumfiles.ru/files/0019/33/10/97182.png class='tip' title='Воин'>");
+UniverСhange(".forum .tclcon a","/lock/","<img src=http://forumfiles.ru/files/0019/33/10/77325.png class='tip' title='Чернокнижник'>");
+UniverСhange(".forum .tclcon a","/sham/","<img src=http://forumfiles.ru/files/0019/33/10/55534.png class='tip' title='Шаман'>");
+UniverСhange(".forum .tclcon a","/rog/","<img src=http://forumfiles.ru/files/0019/33/10/13446.png class='tip' title='Разбойник'>");
+UniverСhange(".forum .tclcon a","/pr/","<img src=http://forumfiles.ru/files/0019/33/10/71660.png class='tip' title='Жрец'>");
+UniverСhange(".forum .tclcon a","/pal/","<img src=http://forumfiles.ru/files/0019/33/10/71392.png class='tip' title='Паладин'>");
+UniverСhange(".forum .tclcon a","/monk/","<img src=http://forumfiles.ru/files/0019/33/10/65747.png class='tip' title='Монах'>");
+UniverСhange(".forum .tclcon a","/mage/","<img src=http://forumfiles.ru/files/0019/33/10/67690.png class='tip' title='Маг'>");
+UniverСhange(".forum .tclcon a","/hunt/","<img src=http://forumfiles.ru/files/0019/33/10/68296.png class='tip' title='Охотник'>");
+UniverСhange(".forum .tclcon a","/dru/","<img src=http://forumfiles.ru/files/0019/33/10/82066.png class='tip' title='Друид'>");
+UniverСhange(".forum .tclcon a","/dk/","<img src=http://forumfiles.ru/files/0019/33/10/64279.png class='tip' title='Рыцарь смерти'>");
+
+
+UniverСhange("#profile #profile2 .inputfield label","Статус","Звание");
+UniverСhange(".pa-title","Генерал","<font color='#24c6f1'>Генерал</font>");
+UniverСhange(".pa-title","Совет гильдии","<font color='#24c6f1'>Совет Гильдии</font>");
+UniverСhange(".pa-title","Почетный согильдиец","<font color='#719b31'>Почетный согильдиец</font>");
+UniverСhange(".pa-title","Cогильдиец","<font color='#cbc929'>Cогильдиец</font>");
+UniverСhange(".pa-title","Рейдер","<font color='#cbc929'>Рейдер</font>");
+
+UniverСhange("#BlogTable .leftstats h1","Статистика","Последние записи");
+</script>
+
+<script><!--Добавляем ссылку на форум в crumbs -->
+if(!$("#pun-index").length&&document.URL.indexOf("/portal")==-1){
+var s=' »&nbsp;<a href="/=&forum">Форум</a>';$(".crumbs").find("a:first").after(s)};
+if($(".punbb").attr("id")=="pun-index"){var ss=$("#pun-title h1 span").text();
+var s=' »&nbsp;<a href="/pages/index">'+ss+'</a> »&nbsp;\
+<a href="/=&forum">Форум</a>';$(".crumbs").html(s);};
+</script>
+
+<!--выделение кода по клику-->
+<script type="text/javascript">
+function select_text(elem) {
+if(window.getSelection) {   
+var s=window.getSelection();   
+if(s.setBaseAndExtent){   
+s.setBaseAndExtent(elem,0,elem,elem.innerText.length-1);   
+}
+else {   
+var r=document.createRange();   
+r.selectNodeContents(elem);   
+s.removeAllRanges();   
+s.addRange(r);
+}   
+}
+else if(document.getSelection){   
+var s=document.getSelection();   
+var r=document.createRange();   
+r.selectNodeContents(elem);   
+s.removeAllRanges();   
+s.addRange(r);   
+}
+else if(document.selection){   
+var r=document.body.createTextRange();   
+r.moveToElementText(elem);   
+r.select();
+}   
+}
+</script>
+<script type="text/javascript">
+var div = document.getElementById('pun-main').getElementsByTagName('div');
+for(x in div){
+if(div[x].className=='code-box'){
+div[x].getElementsByTagName('strong')[0].innerHTML = '<a href="/" onclick="select_text(this.parentNode.parentNode.childNodes[1].getElementsByTagName(\'pre\')[0]); return false;">Выделить код</a>';
+}
+}
+</script>
+
+<!-- ссылки на контакты около ника -->
+<script type="text/javascript">
+$('#pun-viewtopic .post').each(function() {
+  if($(this).find('.pl-email').length && GroupID != 3) {
+    var a = $('<span class="platz"></span>').appendTo($(this).find('.pa-author a'));
+    var apl = a.position().left+3, apt = a.position().top;
+    $(this).find('.pa-author').after(' <span style="position:absolute;top:'+apt+'px;left:'+apl+'px; cursor:pointer;" class="open-p">&#9660</span><ul class="view-p"></ul>');
+    $(this).find('.pl-email,.pl-website').addClass("link").appendTo($(this).find('.view-p'));
+    $(this).find('.open-p').click(function() {
+      $(this).next().toggle();
+    });
+  }
+});
+</script>
+
+<!--убрать названия доп.полей-->
+<script type="text/javascript">
+var A=[3,4,5]
+$(".post .post-author li").each(function (){
+for(var i in A){if($(this).hasClass("pa-fld"+A[i])){
+$(this).html($(this).html().replace(/^[^:]*:/,''));}};});
+</script>
+
+<!-- наградные звания -->
+<noscript><style type="text/css">
+/* Cкрываем поля в Профиле(и статус)
+ при отключении ява-скрипт в браузере
+для регулировки убираем первый <noscript>*/
+
+#pun-profile #profile2 .formsubmit,
+#pun-profile #profile2 p.inputfield,
+#pun-profile #profile2 fieldset fieldset,
+#pun-profile #profile2 .fs-box >*{
+  display:none!important; 
+}
+#pun-profile #profile2 .fs-box:after {
+      display:inline-block;
+      position:absolute;
+      margin: -20px 0 0 -8px;
+      content: "Отключен ява-скрипт, заполнение полей невозможно!";
+      color: #333; /* Цвет текста */ 
+      background-color: #fc0; /* Цвет фона */ 
+      font-size: 90%; /* Размер шрифта */ 
+      padding: 2px; /* Поля вокруг текста */ 
+}
+</style></noscript>
+<script type="text/javascript">// #fld2')
+$(document).ready(function(){
+  var Status = {
+
+    "Генерал" : [2],
+    "Совет Гильдии" : [2, 662, 620, 115, 689, 934, 845],
+    "Почетный согильдиец" : [2, 47, 662, 10, 511, 620, 115, 845, 128, 949, 845],
+    "Cогильдиец" : [10, 47, 394, 511, 684, 662, 620, 696, 781, 718, 412, 115, 689, 934, 894, 949, 890, 871, 898, 841, 827, 1114, 1083, 845, 1010, 918, 1026, 1435, 1373, 1294, 1323, 1235, 1280, 1233],
+    "Рейдер" : [164, 162, 2, 137, 231, 10, 128, 234],
+    "Рекрут" : [2] //последний, без запятой
+  }
+  if(document.URL.indexOf('/profile.php?section=personal&id=')==-1) return false;
+  var id = +document.URL.split('personal&id=')[1];
+
+  var inp = $('#profile2 .fs-box #fld2');
+  var val = inp.val(); //alert(val);
+  var select = $('<select id="fld2" name="title" value=""></select>');
+  select.insertAfter(inp);  inp.remove();
+  var a = ('&'+'#160');
+  a = a+a+a+a; //пробелы, чтобы пустой селект не схлопывался;
+  var option = $('<option value="">'+a+a+a+a+'</option>');
+  option.appendTo(select);
+
+  for(var key in Status) {
+    if($.inArray(id,Status[key])!=-1){
+       var th = option.clone().text(key).val(key).appendTo(select);
+       th.attr("selected",val == key);
+       if(val == key) select.find('option[value=""]').remove();
+     }
+  }
+  if(select.find('option:selected').length== 0) select.find('option[value=""]').attr("selected",1);
+});
+</script>
+
+<!-- цветовыделение постов -->
+<script type="text/javascript">
+var NickArray = ['']; //Массив постов с никами
+$(".post .pa-author a").each(function(){
+  var nickItem = $(this).text();
+  if($.inArray(nickItem, NickArray)!=-1) $(this).parents('.post').addClass('post-gm');
+});
+</script>
+<script type="text/javascript">
+var NickArray = ['Бафомета']; //Массив постов с никами
+$(".post .pa-author a").each(function(){
+  var nickItem = $(this).text();
+  if($.inArray(nickItem, NickArray)!=-1) $(this).parents('.post').addClass('post-pvp');
+});
+</script>
+<script type="text/javascript">
+var NickArray = ['']; //Массив постов с никами
+$(".post .pa-author a").each(function(){
+  var nickItem = $(this).text();
+  if($.inArray(nickItem, NickArray)!=-1) $(this).parents('.post').addClass('post-pal');
+});
+</script>
+<script type="text/javascript">
+var NickArray = ['']; //Массив постов с никами
+$(".post .pa-author a").each(function(){
+  var nickItem = $(this).text();
+  if($.inArray(nickItem, NickArray)!=-1) $(this).parents('.post').addClass('post-kl');
+});
+</script>
+<script type="text/javascript">
+var NickArray2 = ['']; //Массив постов с никами
+$(".post .pa-author a").each(function(){
+  var nickItem2 = $(this).text();
+  if($.inArray(nickItem2, NickArray2)!=-1) $(this).parents('.post').addClass('post-gl');
+});
+</script>
+
+<!-- убираем аплоадс в превью картинок -->
+<script type="text/javascript">
+function insertUploadedImage(img){
+var b='img]',c='url',
+prev = '['+b+img.src+'[/'+b,
+lnk = $(img).attr('data-img-url'),
+link = '['+c+'='+ lnk +']',
+orig = '['+b+lnk+'[/'+b;
+if($('#selected-insert-format').val()=='viewer')bbcode(link+prev+'[/'+c+']\n','');
+else bbcode(orig+'\n','');
+}
+var  IntervalId0;
+$("#image-area-tcon-computer").find('img[src$="/js/uploadify/upload.png"]').live('click', function() {
+function TstImgselected () {
+  var a=$("#post #image-area-tcon-computer").find("#selected-insert-format");
+  if(a.length==1){
+  a.find('option').removeAttr("selected")
+  a.find('option[value="source"]').attr("selected","selected")
+  clearInterval(IntervalId0);}
+}IntervalId0 = setInterval(TstImgselected,100)
+});
+</script>
+
+<!-- дополнительные иконки в окне смайлов -->
+<style type="text/css">
+#wrapper {width: 600px;}
+/* вкладки доп смайлов */
+ul.tabs {height: 25px;line-height: 20px;margin: 0 0 3px;list-style: none;}
+ul.tabs li {float: left;margin-right: 1px; cursor:pointer;}
+ul.tabs li a {color: #fab000;cursor: pointer;display: block;margin-bottom: -1px;padding: 0 14px 1px;position: relative;text-decoration: none;width: 84px;}
+ul.tabs li a:hover {color:#fff;padding: 0 14px; text-decoration:none;}
+ul.tabs li.tab-current a {color: #fab000;padding: 0px 14px 2px;border:medium hidden;line-height: 22px;background-position: -652px -62px;}
+ul.tabs li.tab-current a:hover {color: #fff;}
+div.t2,div.t3 {display: none;width: 450px;}
+div.t2 img {margin: 3px 4px}
+</style>
+<script type="text/javascript">
+var nabor2 = ['http://forumfiles.ru/files/0012/ad/ab/65780.png', 
+'http://forumfiles.ru/files/0019/33/10/20324.png
+'http://forumfiles.ru/files/0019/33/10/77681.png',
+'http://forumfiles.ru/files/0019/33/10/16810.png',
+'http://sd.uploads.ru/Ff18I.png',
+'http://sd.uploads.ru/vlxnj.png',
+'http://sd.uploads.ru/qOx45.png',
+'http://sd.uploads.ru/UhIYd.png',
+'http://forumfiles.ru/files/0019/33/10/33668.gif',
+'http://forumfiles.ru/files/0019/33/10/97182.png',
+'http://forumfiles.ru/files/0019/33/10/77325.png',
+'http://forumfiles.ru/files/0019/33/10/55534.png',
+'http://forumfiles.ru/files/0019/33/10/13446.png',
+'http://forumfiles.ru/files/0019/33/10/71660.png',
+'http://forumfiles.ru/files/0019/33/10/71392.png',
+'http://forumfiles.ru/files/0019/33/10/65747.png',
+'http://forumfiles.ru/files/0019/33/10/67690.png',
+'http://forumfiles.ru/files/0019/33/10/68296.png',
+'http://forumfiles.ru/files/0019/33/10/82066.png',
+'http://forumfiles.ru/files/0019/33/10/64279.png',
+'http://s6.uploads.ru/fo4WT.png',
+'http://s6.uploads.ru/2JVCR.png',
+'/files/0012/ad/ab/53106.png',
+'/files/0012/ad/ab/24566.png',
+'/files/0012/ad/ab/81030.png',
+'/files/0012/ad/ab/80509.png'];
+
+$(document).ready(function() {
+console.log("Ready!");
+$('#smilies-block').addClass('t1');
+$('#smilies-area').prepend('<div id="wrapper"><ul class="tabs tabs1" onclick="return changeVisibility (\'smilies-area\', false)"><li class="t1 tab-current"><a>Смайлики</a></li><li class="t2"><a>Иконки</a></li></ul><div class="t2"></div></div>');
+$.each(nabor2, function(i) {
+$('div.t2').append('<img src="'+nabor2[i]+'" onclick=smile(\'[img]'+nabor2[i]+'[/img]\') />');
+});
+$('ul.tabs.tabs1 li').click(function(){
+var thisClass = this.className.slice(0,2);
+$('div.t1, div.t2').hide();
+$('div.' + thisClass).fadeToggle('slow');
+$('ul.tabs.tabs1 li').removeClass('tab-current');
+$(this).addClass('tab-current');
+}); });
+</script>
+
+<!--дополнительные цвета-->
+<script language="javascript">
+$(function(){
+$('div#color-area table').append('<td style="background-color: #e8e361;"><img src="/i/blank.gif" onclick="bbcode(\'[color=#e8e361]\',\'[/color]\')"></td><td style="background-color: #d7dac5;"><img src="/i/blank.gif" onclick="bbcode(\'[color=#d7dac5]\',\'[/color]\')"></td><td style="background-color: transparent;"><img src="/i/blank.gif" onclick="bbcode(\'[color=transparent]\',\'[/color]\')"></td><td style="background-color: #aad372;"><img src="/i/blank.gif" onclick="bbcode(\'[color=#aad372]\',\'[/color]\')"></td><td style="background-color: #0dffba;"><img src="/i/blank.gif" onclick="bbcode(\'[color=#0dffba]\',\'[/color]\')"></td><td style="background-color: #68cccd;"><img src="/i/blank.gif" onclick="bbcode(\'[color=#68cccd]\',\'[/color]\')"></td><td style="background-color: #c69b5b;"><img src="/i/blank.gif" onclick="bbcode(\'[color=#c69b5b]\',\'[/color]\')"></td><td style="background-color: #9382c9;"><img src="/i/blank.gif" onclick="bbcode(\'[color=#9382c9]\',\'[/color]\')"></td><td style="background-color: #fff448;"><img src="/i/blank.gif" onclick="bbcode(\'[color=#fff448]\',\'[/color]\')"></td><td style="background-color: #2359ff;"><img src="/i/blank.gif" onclick="bbcode(\'[color=#2359ff]\',\'[/color]\')"></td><td style="background-color: #d58cba;"><img src="/i/blank.gif" onclick="bbcode(\'[color=#d58cba]\',\'[/color]\')"></td><td style="background-color: #aa1813;"><img src="/i/blank.gif" onclick="bbcode(\'[color=#aa1813]\',\'[/color]\')"></td><td style="background-color: #ff7c0a;"><img src="/i/blank.gif" onclick="bbcode(\'[color=#ff7c0a]\',\'[/color]\')"></td><td style="background-color: #a330c9;"><img src="/i/blank.gif" onclick="bbcode(\'[color=#a330c9]\',\'[/color]\')"></td>');
+});
+</script>
+
+<!-- копирайт -->
+<div id="b-copy">
+
+<div id="bot-text">
+<div id="text1">
+Элементы дизайна и интерфейса форума © <a target="_blank" href="http://blizzard.com/">Blizzard Entertainment</a><br/>
+</div>
+</div>
+
+</div>
+
+
+<!-- wow head -->
+<script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"></script>
+<script>
+var wowhead_tooltips = { "colorlinks": true, "iconizelinks": true, "renamelinks": true }
+</script>
+<script type="text/javascript">
+var a = document.getElementsByTagName("a")
+for( i=0; i<a.length; i++ ){
+if( a[i].href.indexOf("http://" + document.domain + "/click.php?http://") != -1 )
+{a[i].href = "http://" + a[i].href.substring(a[i].href.lastIndexOf("http://")+7)}
+}
+</script>
+
+<!-- Прокрутка вверх -->
+<p id="back-top"><a href="#top"><span></span></a></p>
+<script>
+$(document).ready(function(){
+    $(function (){
+		$("#back-top").hide();
+
+		$(window).scroll(function (){
+			if ($(this).scrollTop() > 700){
+				$("#back-top").fadeIn();
+			} else{
+				$("#back-top").fadeOut();
+			}
+		});
+
+		$("#back-top a").click(function (){
+			$("body,html").animate({
+				scrollTop:0
+			}, 800);
+			return false;
+		});
+	});
+});
+</script></div>
+</div>
+
+</div>
+</div>
+</div>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5S52WTB"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
