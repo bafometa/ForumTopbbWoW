@@ -1,0 +1,78 @@
+#b00st{background-color:rgba(0, 0, 0, 0.5);box-shadow:0 0 5px #19a600;display:inline-block;height:360px;margin:0 30px 20px;padding:5px 0;text-align:center;vertical-align:top;width:260px;opacity:0.8;}
+#b00st:hover{opacity:1.0;background-color:#000;box-shadow:0 0 10px #19a600;}
+#b00st.ikraid{background:rgba(0, 0, 0, 0.5) url(http://s5.uploads.ru/4hvHN.png) no-repeat bottom center;}
+#b00st.cnraid{background:rgba(0, 0, 0, 0.5) url(http://s9.uploads.ru/moi02.png) no-repeat bottom center;}
+#b00st.dang{background:rgba(0, 0, 0, 0.5) url(http://sh.uploads.ru/GZHao.png) no-repeat bottom center;}
+#b00st.no-sell{opacity:0.35;color:red;}
+#b00st.no-sell:hover{background-color:rgba(0, 0, 0, 0.5);box-shadow:0 0 5px #19a600;}
+#questionary-menu hr{width:auto;}
+.post-parts .btn-wrap{font-size:20px;margin:10px 0;text-transform:uppercase;}
+#p4263 h3, #p4999 h3, #p4370 h3, #p4887 h3, #p4889 h3, #p5001 h3, #p4840 h3, #p5271 h3,
+#p4263 .post-author, #p4999 .post-author, #p4370 .post-author, #p4887 .post-author, #p4889 .post-author, #p5001 .post-author, #p4840 .post-author, #p5271 .post-author,
+#p4263 .post-rating, #p4999 .post-rating, #p4370 .post-rating, #p4887 .post-rating, #p4889 .post-rating, #p5001 .post-rating, #p4840 .post-rating, #p5271 .post-rating{display:none;}
+#p4263 .post-body, #p4999 .post-body, #p4370 .post-body, #p4887 .post-body, #p4889 .post-body, #p5001 .post-body, #p4840 .post-body, #p5271 .post-body{margin:0 10px;}
+#pun-ulinks li.item5,
+#pun-profile #profile #profilenav li.item10{display:none;}
+#pun-index #forum_f2 div.icon{background-position:-42px 0px;}
+#pun-index #forum_f2 div.inew{background-position:0 0px;}
+#pun-index #forum_f3 div.icon{background-position:-42px -40px;}
+#pun-index #forum_f3 div.inew{background-position:0 -40px;}
+#pun-index #forum_f5 div.icon{background-position:-42px -80px;}
+#pun-index #forum_f5 div.inew{background-position:0 -80px;}
+#pun-index #forum_f4 div.icon{background-position:-42px -120px;}
+#pun-index #forum_f4 div.inew{background-position:0 -120px;}
+#pun-index #forum_f6 div.icon{background-position:-42px -160px;}
+#pun-index #forum_f6 div.inew{background-position:0 -160px;}
+#pun-index #forum_f21 div.icon{background-position:-42px -160px;}
+#pun-index #forum_f21 div.inew{background-position:0 -160px;}
+#pun-index #forum_f9 div.icon{background-position:-42px -200px;}
+#pun-index #forum_f9 div.inew{background-position:0 -200px;}
+#pun-index #forum_f7 div.icon{background-position:-42px -280px;}
+#pun-index #forum_f7 div.inew{background-position:0 -280px;}
+#pun-index #forum_f8 div.icon{background-position:-42px -240px;}
+#pun-index #forum_f8 div.inew{background-position:0 -240px;}
+#pun-index #forum_f11 div.icon{background-position:-42px -240px;}
+#pun-index #forum_f11 div.inew{background-position:0 -240px;}
+#pun-index #forum_f12 div.icon{background-position:-42px -320px;}
+#pun-index #forum_f12 div.inew{background-position:0 -320px;}
+#pun-index #forum_f14 div.icon{background-position:-42px -320px;}
+#pun-index #forum_f14 div.inew{background-position:0 -320px;}
+#pun-index #forum_f13 div.icon{background-position:-42px -360px;}
+#pun-index #forum_f13 div.inew{background-position:0 -360px;}
+#pun-index #forum_f15 div.icon{background-position:-42px -400px;}
+#pun-index #forum_f15 div.inew{background-position:0 -400px;}
+#pun-index #forum_f16 div.icon{background-position:-42px -440px;}
+#pun-index #forum_f16 div.inew{background-position:0 -440px;}
+#pun-index #forum_f17 div.icon{background-position:-42px -480px;}
+#pun-index #forum_f17 div.inew{background-position:0 -480px;}
+#pun-index #forum_f13 div.icon{background-position:-42px -520px;}
+#pun-index #forum_f13 div.inew{background-position:0 -520px;}
+#pun-index #forum_f27 div.icon{background-position:-42px -520px;}
+#pun-index #forum_f27 div.inew{background-position:0 -520px;}
+#pun-index #forum_f36 div.icon{background-position:-42px -520px;}
+#pun-index #forum_f36 div.inew{background-position:0 -520px;}
+#pun-index #forum_f42 div.icon{background-position:-42px -520px;}
+#pun-index #forum_f42 div.inew{background-position:0 -520px;}
+#pun-index #forum_f9 div.icon{background-position:-42px -560px;}
+#pun-index #forum_f9 div.inew{background-position:0 -560px;}
+#pun-index #forum_f38 div.icon{background-position:-42px -560px;}
+#pun-index #forum_f38 div.inew{background-position:0 -560px;}
+#pun-index #forum_f39 div.icon{background-position:-42px -600px;}
+#pun-index #forum_f39 div.inew{background-position:0 -600px;}
+#pun-index #forum_f6 div.icon{background-position:0 -80px;}
+#pun-index .main #forum_f6 .tcl{width:900px;display:block;}
+.post-gm .post-body, .post-gm .post-box{color:#3a89c9;}
+.post-pvp .post-body, .post-pal .post-box{color:#d58cba;}
+.post-gl .post-body, .post-gl .post-box{color:#76a353;}
+.post-gl .post-body, .post-kl .post-box{color:#e8e361;}
+.post-pal .post-body, .post-pvp .post-box{color:#00b4ff;}
+.post-author li.pa-avatar img[alt="1"]{border:#2a6265 solid 1px !important;border-bottom-color:#152020 !important;border-top-color:#8ad7ea !important;box-shadow:0 0 1px #fff, 0 0 5px #1baae2, 0 0 15px #6acfff;}
+#pun-blogs .post-author li.pa-avatar img[alt="1"]{box-shadow:0 0 1px #fff, 0 0 5px #1baae2;}
+.post-author li.pa-avatar img[alt="2"]{border:#6aaf11 solid 1px !important;border-bottom-color:#33510d !important;border-top-color:#a1e648 !important;box-shadow:0 0 1px #b4ff42, 0 0 5px #719b31, 0 0 15px #bbe47b;}
+#pun-blogs .post-author li.pa-avatar img[alt="2"]{box-shadow:0 0 1px #b4ff42, 0 0 5px #719b31;}
+.post-author li.pa-avatar img[alt="3"]{border:#cbc929 solid 1px !important;border-bottom-color:#85841a !important;border-top-color:#e2e04d !important;box-shadow:0 0 1px #fffc3c, 0 0 5px #989630, 0 0 15px #ebe984;}
+#pun-blogs .post-author li.pa-avatar img[alt="3"]{box-shadow:0 0 1px #fffc3c, 0 0 5px #989630;}
+.post-author li.pa-avatar img[alt="4"]{border:#d461aa solid 1px !important;border-bottom-color:#65274e !important;border-top-color:#e84daf !important;box-shadow:0 0 1px #ff65c6, 0 0 5px #9a5881, 0 0 15px #ecadd4;}
+#pun-blogs .post-author li.pa-avatar img[alt="4"]{box-shadow:0 0 1px #ff65c6, 0 0 5px #9a5881;}
+.post-author li.pa-avatar img[alt="5"]{border:#652a2a solid 1px !important;border-bottom-color:#312121 !important;border-top-color:#e45353 !important;box-shadow:0 0 1px #ff0000, 0 0 5px #e03333, 0 0 15px #ff6a6a;}
+#pun-blogs .post-author li.pa-avatar img[alt="5"]{box-shadow:0 0 1px #ff0000, 0 0 5px #e03333;}
