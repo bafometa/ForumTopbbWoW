@@ -1,0 +1,201 @@
+<meta name="google-site-verification" content="cJXmvm-VmwyDU9Xim9-Hfn2KRdIeeAkTWN7653NRaA0" />
+<div id="html-header">
+<!-- Мобильный стиль -->
+<link rel="stylesheet" type="text/css" href="http://forumfiles.ru/files/0019/33/10/22795.css">
+
+<!-- Скрипт переключателя стиля  -->
+<script type="text/javascript">
+$("link[rel='stylesheet']:first").after('<link id="MyStyle" rel="stylesheet" type="text/css"/>')
+var linkStyles='<link id="MyStyle" rel="stylesheet" type="text/css" href="';
+function setcookie(a,b,c) {if(c){var d = new Date();d.setDate(d.getDate()+c);}if(a && b) document.cookie = a+'='+b+(c ? '; expires='+d.toUTCString() : '');else return false;}
+function getcookie(a) {var b = new RegExp(a+'=([^;]){1,}');var c = b.exec(document.cookie);if(c) c = c[0].split('=');else return false;return c[1] ? c[1] : false;}
+function clearSet(L){if(L){setcookie("changeStyle",L,30);$("#MyStyle").replaceWith(linkStyles+L+'"/>')}};var Lmem=getcookie("changeStyle");clearSet(Lmem);
+</script>
+
+<!-- Система блогов на форум в HTML верх -->
+<script type="text/javascript">var BLOG = {};
+BLOG.last    = 1;
+BLOG.view    = 0; 
+BLOG.groups  = [1];
+BLOG.comment = 0; 
+BLOG.fID     = 18;
+</script>
+<style type="text/css">.category.BlogCat{display:none!important;}</style>
+<script type="text/javascript" src="http://forumfiles.ru/files/0016/f0/0a/72355.js"></script>
+<script>
+<!--Вытаскиваем поля профиля в Комментах -->
+var FLD_show=new Array(
+//Поля, отображаемые в комментах, (*Ник и Аватар показаны по умолчанию
+".pa-fld1",  
+".pa-respect" //!последний элемент без запятой
+)
+if($(".punbb").attr("id")=="pun-blogs"&&$(".punbb").hasClass("viewblog")){$(document).pun_aboutReady(function(){
+$(".post:not(.topicpost)").each(function(){var L=$(this).find(".post-author").html();$(this).data("PSTauthor",L)});
+});$(document).ready(function(){$("#viewcomments .post").each(function(){var S=$(this).data("PSTauthor");
+$(this).find(".post-author").html(S);var SS=".post-author li";FLD_show.push(".pa-author");FLD_show.push(".pa-avatar");
+for(var i=0;i<FLD_show.length;i++){SS+=":not("+FLD_show[i]+")";};$(this).find(SS).replaceWith("")});});};
+</script>
+
+<!-- Редирект на портал  -->
+<script>
+var portal = '/pages/main';
+var url = document.URL.split('#')[0];
+if((url+'%a').split('/%')[1]=='a')location.href=portal;
+$(document).ready(function(){
+  var a = $('#pun-navlinks #navmain a')[0];
+  a.href = a.href+'=&forum'
+});
+</script>
+
+<!-- Сервисные скрипты -->
+<script type="text/javascript">
+// Убираем уведомления
+RusffCore.sets.notifications = false;
+// Убираем ссылки на соцсети при входе
+RusffCore.sets.auth_methods = 0;
+// Убираем "Порекомендовать эту страницу"
+rusffLive.enable = false;
+// Убираем "Теги"
+RusffCore.sets.tags = false;
+// Убираем кнопку "Вложения"
+RusffCore.sets.files.button = false;
+// Убираем функцию "Поделиться"
+RusffCore.sets.share = false;
+// Использование фонда форума в Кредитах
+RusffCore.sets.foundation = 2;
+</script>
+<style>/* Убираем поле подарков */
+.pa-gifts { display: none; }</style>
+<script type="text/javascript">
+// Убираем сокращатель ссылок
+FORUM.set("editor.link.short_url", function() { return false; });
+</script>
+<!-- селекторы для страниц -->
+<script>
+var ownClasses = {
+  listAwards : /\/mod\/awards\/$/,
+  userAward : /\/mod\/awards\/\?uid/,
+  listGifts : /\/mod\/gifts\/$/,
+  userGift : /\/mod\/gifts\/\?uid/
+}
+
+var hereLoc = location.href;
+
+for (item in ownClasses) {
+  if (hereLoc.match(ownClasses[item])) {
+    $("#pun-mod").addClass(item);
+  }
+}
+</script>
+
+<!-- фиксим репутацию -->
+<script type="text/javascript">
+if(FORUM.PartnerVote.toString().replace(/function\s*\(post_id,vote\)\s*/,"")==="{return true;}")
+FORUM.PartnerVote = function(post_id,vote){return false}
+</script>
+
+<!-- выделяем описание поля персонажа -->
+<style type="text/css">form #KingPers{color: red !important; font-size: 16px !important; line-height: 20px !important;}</style>
+<script type="text/javascript">
+$(function(){
+if (document.URL.mainOf("profile.php?section=fields")!=-1) $('form').find('p.infofield:contains("ВНИМАНИЕ! Правильное заполнение этого поля необходимо для прикрепления оружейной")')[0].id="KingPers";
+});
+</script>
+
+
+<!-- Подсказки -->
+<script src="/files/0012/ad/ab/13118.js" type="text/javascript"></script>
+
+<!-- Скрипт для создания анкет © Alex_63 -->
+<script type="text/javascript">
+var Questnr = {};
+Questnr.groups = [1,2]; //Группы, которым разрешено создавать шаблоны для анкет
+Questnr.forums = [9]; //Форумы с допуском к анкетированию
+Questnr.title  = 'Заявка от '; //Начало заголовка темы с анкетой (по умолчанию)
+Questnr.noedit = 1; //Запрет редактирования заполненной анкеты пользователем
+</script><script type="text/javascript">
+['viewforum','viewtopic','post','edit'].indexOf($('.punbb')[0].id.substr(4))!=-1&&
+$().pun_mainReady(function(){var s='script',l='http://forumfiles.ru/files/0015/c4/3f/45857.js';
+var f=$('#pun-viewforum').length?$('link[rel="alternate"]'):$('.crumbs a[href*="viewforum"]:last');
+f=+f[0].href.match(/id=(\d+)$/)[1];Questnr.forums.indexOf(f)!=-1&&document.write('<'+s+' src="'+l+'"></'+s+'>')});
+</script>
+  
+  <!-- Анкета: Добавка кнопок BB-тегов к textarea -->
+<style>
+.new[id=form-buttons]{max-width:104px}.new[id=form-buttons] table{margin:0}
+.new[id=form-buttons] td{border:0 none transparent!important; height:24px;padding:0!important}
+</style>
+<script type="text/javascript">
+if(GroupID != 3)$(function() {var button_tbl = $('#post #form-buttons').clone().addClass('new');
+  button_tbl.find('#button-image>img')[0].setAttribute('onclick','bbcode(\'['+'img]\',\'[/img]\')');
+  button_tbl.find('td:not(#button-bold):not(#button-italic):not(#button-underline):not(#button-image)').remove();
+  button_tbl.insertBefore('.questionary-post textarea');
+  $('.new[id="form-buttons"]').on('mouseenter',function() {
+     var area = $(this).next('textarea');if(!area.length){area = $(this).next().find('textarea');}
+     $('.questionary-post').find('textarea').removeAttr('id');
+     if(area[0].id!='main-reply')area.attr('id','main-reply');
+  }).on('mouseleave',function(){$('.questionary-post textarea').removeAttr('id');});
+});
+</script>
+<script>
+Questnr.allowReply = [ 9 ];// ID тем в анкет-форумах, где разрешено отвечать юзерам
+</script>
+<!-- Кнопки переключения сайт-форум -->
+<div id="site-nav">
+<div id="sait">
+<div id="sait_bg"><a href="http://bluewalkers.ru/pages/main">На сайт</a></div>
+<div id="sait_bgh"><a href="http://bluewalkers.ru/pages/main">На сайт</a></div>
+</div>
+<div id="forum">
+<div id="forum_bg"><a href="http://bluewalkers.ru/=&forum">На форум</a></div>
+<div id="forum_bgh"><a href="http://bluewalkers.ru/=&forum">На форум</a></div>
+</div>
+</div>
+
+<div id="main-header">
+
+<!-- Видео + кнопки управления дизайном -->
+<div id="key-pan">
+
+<div  id="key-pan_ch">
+<a class="tip" title="НАШИ СТРИМЫ: присоединяйтесь к прямым трансляциям событий гильдии ^^" id="strimi" href="http://bluewalkers.ru/pages/media#link-block"></a>
+
+<div id="changeStyle">
+<a class="tip" title="Включить / Выключить анимацию на форуме" alt="http://forumfiles.ru/files/0019/33/10/71960.css" id="novid" href="#"></a>
+<a class="tip" title="Включить / Выключить облегченную версию сайта" alt="http://forumfiles.ru/files/0019/33/10/20603.css" id="nodis" href="#"></a>
+</div>
+<script>$("#changeStyle a[alt='"+Lmem+"']").addClass("STYLselect");
+$('#changeStyle a[alt]').click(function(){if($(this).hasClass("STYLselect")){L='#';$('#changeStyle a[alt]').removeClass("STYLselect")}else{  L=$(this).attr("alt");$('#changeStyle a[alt]').removeClass("STYLselect");$(this).addClass("STYLselect");}clearSet(L);});
+</script>
+</div>
+
+<div  id="key-pan_a"><a href="https://www.youtube.com/channel/UCImgqZedOhQtuzI_mZpUQcw" target="_blank" class="tip" title="Наш канал с видосами"></a></div>
+<div id="key-pan_overlay"></div>
+<div id="key-pan_span">Мы на YouTube</div>
+<div id="key-pan_video">
+<img src="http://gerda.moy.su/MyBB_files/BT-legion/video.gif">
+</div>
+
+</div>
+
+<!-- Шапка -->
+<div id="video-overlay"></div>
+<div id="video-header">
+<video autoplay="autoplay" loop="loop" width="2260">
+<source src="https://bnetcmsus-a.akamaihd.net/cms/template_resource/eo/EO0JCNO2PZ7W1509567828234.mp4" type='video/webm; codecs="vp8, vorbis"' />
+</video>
+</div>
+<div id="main-header_TR"></div>
+
+</div>
+<!-- Меню навигации для сайта -->
+<div id="pun-pagenav" class="section"><ul class="container">
+
+<li id="navindex"><a href="http://bluewalkers.ru/pages/main"><span>Главная</span></a></li>
+<li id="navblogs"><a href="http://bluewalkers.ru/blogs.php"><span>Новости</span></a></li>
+<li id="navguild"><a href="http://bluewalkers.ru/pages/guild"><span>Гильдия</span></a></li>
+<li id="navroster"><a href="http://bluewalkers.ru/pages/roster"><span>Ростер</span></a></li>
+<li id="navrecruit"><a href="http://bluewalkers.ru/pages/rekruting"><span>Рекрутинг</span></a></li>
+<li id="navmedia"><a href="http://bluewalkers.ru/pages/media"><span>Медиа</span></a></li>
+
+</ul></div>
